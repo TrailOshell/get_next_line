@@ -11,3 +11,19 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strdup(const char *s1)
+{
+	char			*ptr;
+	size_t			i;
+
+	if (!s1)
+		return (0);
+	ptr = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!ptr)
+		return (0);
+	i = 0;
+	while (i < n)
+		ptr[i++] = *s1++;
+	return (ptr);
+}

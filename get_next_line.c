@@ -12,6 +12,25 @@
 
 #include "get_next_line.h"
 
+char	*free_null(char *str, char *buffer, int check, int *index)
+{
+	int	i;
+
+	i = 0;
+	if (check)
+	{
+		free(str);
+		free(buffer);
+	}
+	else
+	{
+		while (str[i] != '\n' && answer[i] != '\0')
+			i++;
+		*index = i;
+	}
+	return (NULL);
+}
+
 char	*read_to_init(int *read_data, char *str, int fd, int i)
 {
 	char	*buffer;
@@ -22,16 +41,16 @@ char	*read_to_init(int *read_data, char *str, int fd, int i)
 	{
 		*read_data = read(fd, buffer, BUFFER_SIZE);
 		// if (*read_data < 0)
-		// 	return (free_null());
+			return (free_null(str, buffer, 1, i));
 		if (!*number_read)
 			break ;
-		buffer[*read_data] = 0;
+		buffer[*read_data] = '\0';
 		// if (!str)
-		// 	str = ft_strdup("");
-		tmp = ft_trjoin(str, buffer);
+			// str = ft_strdup("");
+		tmp = ft_strjoin(str, buffer);
 		free(str);
 		str = tmp;
-		// free_null();
+		free_null(str, NULL, );
 		if (str[*i] == '\n')
 			break ;
 	}
