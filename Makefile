@@ -50,8 +50,10 @@ bonus: $(OBJS_B)
 clear:
 	clear
 
+NORM	= $(filter-out $(TEST), $(SRCS)) $(INC)
+
 norm: clear
-	norminette $(SRCS) $(SRCS_B)
+	norminette $(NORM)
 	norminette --version
 
 log: clear

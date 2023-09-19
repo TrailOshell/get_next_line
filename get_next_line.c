@@ -24,14 +24,14 @@ char	*free_null(char *str, char *buffer, int check, int *index)
 	}
 	else
 	{
-		while (str[i] != '\n' && answer[i] != '\0')
+		while (str[i] != '\n' && str[i] != '\0')
 			i++;
 		*index = i;
 	}
 	return (NULL);
 }
 
-char	*read_to_init(int *read_data, char *str, int fd, int i)
+char	*read_to_init(int *read_data, char *str, int fd, int *i)
 {
 	char	*buffer;
 	char	*tmp;
@@ -40,17 +40,17 @@ char	*read_to_init(int *read_data, char *str, int fd, int i)
 	while (*read_data)
 	{
 		*read_data = read(fd, buffer, BUFFER_SIZE);
-		// if (*read_data < 0)
+		if (*read_data < 0)
 			return (free_null(str, buffer, 1, i));
-		if (!*number_read)
+		if (!*read_data)
 			break ;
 		buffer[*read_data] = '\0';
-		// if (!str)
-			// str = ft_strdup("");
+		if (!str)
+			str = ft_strdup("");
 		tmp = ft_strjoin(str, buffer);
 		free(str);
 		str = tmp;
-		free_null(str, NULL, );
+		free_null(str, NULL, 0, i);
 		if (str[*i] == '\n')
 			break ;
 	}
@@ -68,12 +68,14 @@ char	*get_next_line(int fd)
 
 	if (fd < 0)
 		return (0);
+	i = 0;
 	str = 0;
+	read_data = 1;
 	if (buffer)
 	{
 		str = buffer;
 		buffer = 0;
 	}
-	str = read_to_init(&read_data, str, fd, i);
+	str = read_to_init(&read_data, str, fd, &i);
 	return (0);
 }
