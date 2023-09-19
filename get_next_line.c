@@ -14,9 +14,6 @@
 
 char	*free_null(char *str, char *buffer, int check, int *index)
 {
-	int	i;
-
-	i = 0;
 	if (check)
 	{
 		free(str);
@@ -24,9 +21,9 @@ char	*free_null(char *str, char *buffer, int check, int *index)
 	}
 	else
 	{
-		while (str[i] != '\n' && str[i] != '\0')
-			i++;
-		*index = i;
+		while (*str != '\n' && *str != '\0')
+			str++;
+		*index = 0;
 	}
 	return (NULL);
 }
@@ -58,6 +55,27 @@ char	*read_to_init(int *read_data, char *str, int fd, int *i)
 	return (str);
 }
 
+char	*next_line(char *str, char **buffer, int i)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (len)
+		*buffer = ft_substr(str, i + 1, len - i);
+	else
+		free(str);
+	while (str[i])
+	{
+		if (str[i] == '\n')
+		{
+			str[i + 1] = '\0';
+			break ;
+		}
+		i++;
+	}
+	return (str);
+}
+
 //	the mandatory function
 char	*get_next_line(int fd)
 {
@@ -67,15 +85,42 @@ char	*get_next_line(int fd)
 	int			i;
 
 	if (fd < 0)
-		return (0);
+		return (NULL);
 	i = 0;
 	str = 0;
 	read_data = 1;
 	if (buffer)
 	{
 		str = buffer;
-		buffer = 0;
+		buffer = NULL;
 	}
 	str = read_to_init(&read_data, str, fd, &i);
-	return (0);
+	if (!read_data && str)
+	{
+		while (str[i] != '\n' && str[i] != '\0')
+			i++;
+	}
+	str = next_line(str, &buffer, i);
+	return (str);
 }
+
+/*
+	char	*free_null(char *str, char *buffer, int check, int *index)
+	{
+		int	i;
+
+		i = 0;
+		if (check)
+		{
+			free(str);
+			free(buffer);
+		}
+		else
+		{
+			while (str[i] != '\n' && str[i] != '\0')
+				i++;
+			*index = i;
+		}
+		return (NULL);
+	}
+*/
