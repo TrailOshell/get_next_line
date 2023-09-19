@@ -12,22 +12,26 @@
 
 NAME	=	get_next_line.a
 INC		=	get_next_line.h
-SRCS 	=	get_next_line.c get_next_line_utils.c	
+SRCS 	=	get_next_line.c get_next_line_utils.c $(TEST)
 # SRCS_B	=	$(SRCS:.c=_bonus.c)
 OBJS	=	$(SRCS:.c=.o)
 # OBJS_B	=	$(SRCS_B:.c=.o)
 # AR		=	ar rc
-# CC		=	cc
+CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -f
+TEST	=	main.c
+
+OBJS_PTH	=	objs/
 
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $@ $^
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+#	$(AR) $@ $^
 
 %.o: %.c $(INC)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJS_PTH), $@)
 
 clean:
 	$(RM) $(OBJS) #$(OBJS_B)

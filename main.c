@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:56:50 by tsomchan          #+#    #+#             */
-/*   Updated: 2023/09/19 14:56:51 by tsomchan         ###   ########.fr       */
+/*   Created: 2023/09/19 15:41:26 by tsomchan          #+#    #+#             */
+/*   Updated: 2023/09/19 15:41:27 by tsomchan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE
-# define GET_NEXT_LINE
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-#ifndef	BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
+#include "get_next_line.h"
 
-//	get_next_line.c
-char	*get_next_line(int fd);
+int	main()
+{
+	int	fd;
+	char *ptr;
 
-//	get_next_line_utils.c
 
-#endif
+	fd = open("test",O_RDONLY);
+	ptr = get_next_line(fd);
+	//printf("%s",ptr);
+	//free(ptr);
+	while(ptr)
+	{
+		printf("%s",ptr);
+		free(ptr);
+		ptr = get_next_line(fd);
+	}
+	// ptr = get_next_line(fd);
+	// printf("%s",ptr);
+	// free(ptr);
+	// ptr = get_next_line(fd);
+	// printf("%s",ptr);
+	// free(ptr);
+	return(0);
+}
