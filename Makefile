@@ -17,7 +17,7 @@ SRCS 	=	get_next_line.c get_next_line_utils.c $(TEST)
 OBJS	=	$(SRCS:.c=.o)
 # OBJS_B	=	$(SRCS_B:.c=.o)
 # AR		=	ar rc
-CC		=	cc
+CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -f
 TEST	=	main.c

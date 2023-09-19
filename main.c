@@ -17,20 +17,20 @@ int	main()
 	int	fd;
 	char *ptr;
 
-
-	fd = open("test",O_RDONLY);
-	ptr = get_next_line(fd);
-	//printf("%s",ptr);
-	//free(ptr);
-	while(ptr)
-	{
-		printf("%s",ptr);
-		free(ptr);
-		ptr = get_next_line(fd);
-	}
+	fd = open("text",O_RDONLY);
 	// ptr = get_next_line(fd);
-	// printf("%s",ptr);
-	// free(ptr);
+	// printf("initial ptr\t=%s",ptr);
+	// printf("----------------------\n");
+	//free(ptr);
+	// while(ptr)
+	// {
+	// 	printf("get line -> %s",ptr);
+	// 	free(ptr);
+	// 	ptr = get_next_line(fd);
+	// }
+	ptr = get_next_line(fd);
+	printf("%s",ptr);
+	free(ptr);
 	// ptr = get_next_line(fd);
 	// printf("%s",ptr);
 	// free(ptr);
