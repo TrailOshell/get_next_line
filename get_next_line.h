@@ -1,13 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 14:48:02 by tsomchan          #+#    #+#             */
-/*   Updated: 2023/09/19 14:48:03 by tsomchan         ###   ########.fr       */
+/*   Created: 2023/09/19 14:56:50 by tsomchan          #+#    #+#             */
+/*   Updated: 2023/09/19 14:56:51 by tsomchan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#ifndef GET_NEXT_LINE
+# define GET_NEXT_LINE
+# include <unistd.h>
+# include <stdlib.h>
+#endif
