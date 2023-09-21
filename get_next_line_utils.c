@@ -35,6 +35,7 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	while (*s1)
 		ptr[i++] = *s1++;
+	ptr[i] = '\0';
 	return (ptr);
 }
 
