@@ -39,6 +39,17 @@ char	*ft_strdup(const char *s1)
 	return (ptr);
 }
 
+int	check_newline(char *s)
+{
+	while (*s)
+	{
+		if (*s == '\n')
+			return (1);
+		s++;
+	}
+	return (0);
+}
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
@@ -80,6 +91,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		sub[i] = '\0';
 	}
 	return (sub);
+}
+
+size_t	ft_find_newline(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	// while (s[i] != '\0')
+	while (s[i] != '\n' && s[i] != '\0')
+		i++;
+	if (s[i] == '\n')
+		i++;
+	return (i);
 }
 
 /*	ft_strjoin

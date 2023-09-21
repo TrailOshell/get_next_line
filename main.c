@@ -18,10 +18,6 @@ int	main()
 	char *ptr;
 
 	fd = open("text",O_RDONLY);
-	// ptr = get_next_line(fd);
-	// printf("initial ptr\t=%s",ptr);
-	// printf("----------------------\n");
-	//free(ptr);
 	// while(ptr)
 	// {
 	// 	printf("get line -> %s",ptr);
@@ -31,8 +27,15 @@ int	main()
 	ptr = get_next_line(fd);
 	printf("%s",ptr);
 	free(ptr);
-	// ptr = get_next_line(fd);
-	// printf("%s",ptr);
-	// free(ptr);
+	ptr = get_next_line(fd);
+	printf("%s",ptr);
+	free(ptr);
 	return(0);
 }
+
+	/*
+		ptr = get_next_line(fd);
+		printf("initial ptr\t=%s",ptr);
+		printf("----------------------\n");
+		free(ptr);
+	*/
