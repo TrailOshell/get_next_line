@@ -19,6 +19,7 @@ OBJS	=	$(SRCS:.c=.o)
 # AR		=	ar rc
 CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS_BUFF	=	-D BUFFER_SIZE=42
 RM		=	rm -f
 TEST	=	main.c
 
@@ -26,8 +27,12 @@ OBJS_PTH	=	objs/
 
 all : $(NAME)
 
+ifdef b
+CFLAGS_BUFF	=	-D BUFFER_SIZE=$(b)
+endif
+
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+	$(CC) $(CFLAGS) $(CFLAGS_BUFF) $(SRCS) -o $(NAME)
 #	$(AR) $@ $^
 
 %.o: %.c $(INC)

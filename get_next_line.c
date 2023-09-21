@@ -13,15 +13,11 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*read_next_line(int fd, char *store)
+char	*read_next_line(int fd, char *store, char *buffer)
 {
 	int		read_data;
-	char	*buffer;
 	char	*tmp;
 
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
 	read_data = 1;
 	while (read_data)
 	{
@@ -36,11 +32,9 @@ char	*read_next_line(int fd, char *store)
 		tmp = store;
 		store = ft_strjoin(tmp, buffer);
 		free(tmp);
-		tmp = NULL;
 		if (check_newline(buffer))
 			break ;
 	}
-	free(buffer);
 	return (store);
 }
 
@@ -49,14 +43,13 @@ char	*cut_line(char *line)
 	char	*store;
 	size_t	len;
 
-	len = ft_find_newline(line);
 	while (*line != '\n' && *line != '\0')
 		line++;
-	if (*line == '\0' || *(line - (len) + 1) == '\0')
+	if (*line == '\n')
+		line++;
+	if (*line == '\0')
 		return (NULL);
-	*(line + 1) = '\0';	
-	
-	//	keep buffer
+	// if (*line == '\0' || *(line - (len) + 1) == '\0')
 	len = ft_strlen(line);
 	store = malloc(len + 1);
 	if (!store)
@@ -66,10 +59,9 @@ char	*cut_line(char *line)
 	*store = '\0';
 	store -= len;
 	if (*store == '\0')
-	{
 		free(store);
-		store = NULL;
-	}
+	printf("store\t= \"%s\"\n", store);
+	*(line - len) = '\0';
 	return (store);
 }
 
@@ -78,10 +70,16 @@ char	*get_next_line(int fd)
 {
 	static char	*store;
 	char		*line;
+	char		*buffer;
 
 	if (fd < 0)
 		return (NULL);
-	line = read_next_line(fd, store);
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	line = read_next_line(fd, store, buffer);
+	free(buffer);
+	printf("line\t= \"%s\"\n", line);
 	if (line)
 		store = cut_line(line);
 	// printf("store\t= \"%s\"\n", buffer);
