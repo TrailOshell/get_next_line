@@ -26,10 +26,6 @@
 char	*get_next_line(int fd);
 char	*read_next_line(int fd, char *store, char *buffer);
 char	*cut_line(char *line);
-// char	*read_to_init(int *read_data, char *str, int fd, int *i);
-// char	*free_null(char *str, char *buffer, int check, int *index);
-// char	*free_null(char *str, char *buffer);
-// char	*next_line(char *str, char **buffer, int i);
 
 //	get_next_line_utils.c
 size_t	ft_strlen(const char *s);
