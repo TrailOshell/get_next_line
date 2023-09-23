@@ -22,7 +22,7 @@ char	*read_next_line(int fd, char *store, char *buffer)
 	while (read_data)
 	{
 		read_data = read(fd, buffer, BUFFER_SIZE);
-		if (read_data < 0)
+		if (read_data <= -1)
 			return (NULL);
 		if (!read_data)
 			break ;
@@ -49,7 +49,6 @@ char	*cut_line(char *line)
 		line++;
 	if (*line == '\0')
 		return (NULL);
-	// if (*line == '\0' || *(line - (len) + 1) == '\0')
 	len = ft_strlen(line);
 	store = malloc(len + 1);
 	if (!store)
@@ -60,7 +59,6 @@ char	*cut_line(char *line)
 	store -= len;
 	if (*store == '\0')
 		free(store);
-	printf("store\t= \"%s\"\n", store);
 	*(line - len) = '\0';
 	return (store);
 }
@@ -79,13 +77,22 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = read_next_line(fd, store, buffer);
 	free(buffer);
-	printf("line\t= \"%s\"\n", line);
 	if (line)
 		store = cut_line(line);
-	// printf("store\t= \"%s\"\n", buffer);
+	else
+	{
+		free(store);
+		store = NULL;
+	}
 	return (line);
 }
 
+/*
+	// if (*line == '\0' || *(line - (len) + 1) == '\0')
+	// printf("store\t= \"%s\"\n", store);
+	// printf("line\t= \"%s\"\n", line);
+	// printf("store\t= \"%s\"\n", buffer);
+*/
 /*
 char	*read_next_line(int read_data, char *str, int fd)
 {

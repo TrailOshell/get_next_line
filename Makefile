@@ -10,13 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	main.a
+NAME	=	get_next_line.a
 INC		=	get_next_line.h
-SRCS 	=	get_next_line.c get_next_line_utils.c $(TEST)
+SRCS 	=	get_next_line.c get_next_line_utils.c #$(TEST)
 # SRCS_B	=	$(SRCS:.c=_bonus.c)
 OBJS	=	$(SRCS:.c=.o)
 # OBJS_B	=	$(SRCS_B:.c=.o)
-# AR		=	ar rc
+AR		=	ar rc
 CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
 CFLAGS_BUFF	=	-D BUFFER_SIZE=42
@@ -32,22 +32,22 @@ CFLAGS_BUFF	=	-D BUFFER_SIZE=$(b)
 endif
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(CFLAGS_BUFF) $(SRCS) -o $(NAME)
-#	$(AR) $@ $^
+	$(AR) $@ $(addprefix $(OBJS_PTH), $^)
+#	$(CC) $(CFLAGS) $(CFLAGS_BUFF) $(SRCS) -o $(NAME)
 
 %.o: %.c $(INC)
 	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJS_PTH), $@)
 
 clean:
-	$(RM) $(OBJS) #$(OBJS_B)
+	$(RM) $(addprefix $(OBJS_PTH), $(OBJS)) #$(OBJS_B)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-bonus: $(OBJS_B)
-	$(AR) $(NAME) $^
+# bonus: $(OBJS_B)
+# 	$(AR) $(NAME) $^
 
 .PHONY = all clean fclean re #bonus
 
