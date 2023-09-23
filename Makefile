@@ -13,7 +13,7 @@
 NAME	=	get_next_line.a
 INC		=	get_next_line.h
 INC_B	=	get_next_line_bonus.h
-SRCS 	=	get_next_line.c get_next_line_utils.c #$(TEST)
+SRCS 	=	get_next_line.c get_next_line_utils.c
 SRCS_B	=	$(SRCS:.c=_bonus.c)
 OBJS	=	$(SRCS:.c=.o)
 OBJS_B	=	$(SRCS_B:.c=.o)
@@ -22,7 +22,6 @@ CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
 CFLAGS_BUFF	=	-D BUFFER_SIZE=42
 RM		=	rm -f
-TEST	=	main.c
 
 OBJS_PTH	=	objs/
 
@@ -34,7 +33,6 @@ endif
 
 $(NAME): $(OBJS) 
 	$(AR) $@ $(addprefix $(OBJS_PTH), $^)
-#	$(CC) $(CFLAGS) $(CFLAGS_BUFF) $(SRCS) -o $(NAME)
 
 %.o: %.c $(INC) $(INC_B)
 	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJS_PTH), $@)
@@ -56,7 +54,7 @@ bonus: $(OBJS_B)
 clear:
 	clear
 
-NORM	= $(filter-out $(TEST), $(SRCS)) $(INC)
+NORM	= $(SRCS) $(INC) $(SRCS_B) $(INC_B)
 
 norm: clear
 	norminette $(NORM)
@@ -135,7 +133,7 @@ test:
 # 	clear
 # ifdef v
 # 	./$(T_NAME) $(v)
-# 	norminette ft_$(v).c
+# 	norminette $(v).c
 # else
 	./$(T_NAME)
 # endif

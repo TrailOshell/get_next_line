@@ -66,7 +66,7 @@ char	*cut_line(char *line)
 //	the mandatory function
 char	*get_next_line(int fd)
 {
-	static char	*store;
+	static char	*store[OPEN_MAX];
 	char		*line;
 	char		*buffer;
 
@@ -75,14 +75,14 @@ char	*get_next_line(int fd)
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	line = read_next_line(fd, store, buffer);
+	line = read_next_line(fd, store[fd], buffer);
 	free(buffer);
 	if (line)
-		store = cut_line(line);
+		store[fd] = cut_line(line);
 	else
 	{
-		free(store);
-		store = NULL;
+		free(store[fd]);
+		store[fd] = NULL;
 	}
 	return (line);
 }
