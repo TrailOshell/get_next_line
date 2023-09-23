@@ -12,10 +12,11 @@
 
 NAME	=	get_next_line.a
 INC		=	get_next_line.h
+INC_B	=	get_next_line_bonus.h
 SRCS 	=	get_next_line.c get_next_line_utils.c #$(TEST)
-# SRCS_B	=	$(SRCS:.c=_bonus.c)
+SRCS_B	=	$(SRCS:.c=_bonus.c)
 OBJS	=	$(SRCS:.c=.o)
-# OBJS_B	=	$(SRCS_B:.c=.o)
+OBJS_B	=	$(SRCS_B:.c=.o)
 AR		=	ar rc
 CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
@@ -31,11 +32,11 @@ ifdef b
 CFLAGS_BUFF	=	-D BUFFER_SIZE=$(b)
 endif
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) 
 	$(AR) $@ $(addprefix $(OBJS_PTH), $^)
 #	$(CC) $(CFLAGS) $(CFLAGS_BUFF) $(SRCS) -o $(NAME)
 
-%.o: %.c $(INC)
+%.o: %.c $(INC) $(INC_B)
 	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJS_PTH), $@)
 
 clean:
@@ -46,10 +47,10 @@ fclean: clean
 
 re: fclean all
 
-# bonus: $(OBJS_B)
-# 	$(AR) $(NAME) $^
+bonus: $(OBJS_B)
+	$(AR) $(NAME) $(addprefix $(OBJS_PTH), $^)
 
-.PHONY = all clean fclean re #bonus
+.PHONY = all clean fclean re bonus
 
 #	my additional rules
 clear:
@@ -115,8 +116,10 @@ testers: gnl
 T_PTH		=	testing/
 # MYFT		=	$(addprefix $(T_PTH), coloring.c cosmetic.c result_compare.c \
 			result_output.c result_text.c)
-T_HEADER	=	$(SRCS) $(SRCS_B) $(MYFT)
+T_HEADER	=	$(SRCS) $(MYFT)
+T_HEADER_B	=	$(SRCS_B) $(MYFT)
 T_SRCS		=	testing/main.c $(T_HEADER)
+T_SRCS_B	=	testing/main.c $(T_HEADER_B)
 # T_SRCS		+=	$(addprefix $(T_PTH)test_, atoi.c bzero.c calloc.c isalnum.c \
 # 			isalpha.c isascii.c isdigit.c isprint.c itoa.c memchr.c memcmp.c \
 # 			memcpy.c memmove.c memset.c putchar_fd.c putendl_fd.c putnbr_fd.c \
@@ -136,6 +139,10 @@ test:
 # else
 	./$(T_NAME)
 # endif
+
+test_b:
+	$(CC) $(CFLAGS) $(T_SRCS_B) -o $(T_NAME)
+	./$(T_NAME)
 
 # val:
 # 	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
