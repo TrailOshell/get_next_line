@@ -90,18 +90,18 @@ git: git_add push
 USER_PTH	=	/Users/tsomchan/
 PROJECT_PTH	=	$(USER_PTH)github/libft/
 TESTER_PTH	=	$(USER_PTH)testers/
-TRI			=	$(TESTER_PTH)Tripouille/
+GNL			=	$(TESTER_PTH)gnlTester/
 
-tri:
+gnl:
 ifdef v
 	make $(v) -C $(TRI)
 else
 	make -C $(TRI)
 endif
 
-testers: tri
+testers: gnl
 
-.PHONY += tri testers
+.PHONY += gnl testers
 
 #	clone to send for submission
 # CLONE_PTH	=	$(USER_PTH)projects/libft/
@@ -112,11 +112,11 @@ testers: tri
 # 	cp libft.h -c $(addprefix $(CLONE_PTH), libft.h)
 
 #	my testing rules
-# T_PTH		=	testing/
+T_PTH		=	testing/
 # MYFT		=	$(addprefix $(T_PTH), coloring.c cosmetic.c result_compare.c \
-# 			result_output.c result_text.c)
-# T_HEADER	=	$(SRCS) $(SRCS_B) $(MYFT)
-# T_SRCS		=	testing/main.c $(T_HEADER)
+			result_output.c result_text.c)
+T_HEADER	=	$(SRCS) $(SRCS_B) $(MYFT)
+T_SRCS		=	testing/main.c $(T_HEADER)
 # T_SRCS		+=	$(addprefix $(T_PTH)test_, atoi.c bzero.c calloc.c isalnum.c \
 # 			isalpha.c isascii.c isdigit.c isprint.c itoa.c memchr.c memcmp.c \
 # 			memcpy.c memmove.c memset.c putchar_fd.c putendl_fd.c putnbr_fd.c \
@@ -125,16 +125,16 @@ testers: tri
 # 			strrchr.c strtrim.c substr.c tolower.c toupper.c)
 # T_SRCS		+=	$(addprefix $(T_PTH)test_, lstnew.c lstadd_front.c lstsize.c \
 # 			lstlast.c lstadd_back.c lstdelone.c lstiter.c lstmap.c)
-# T_NAME		=	main.a
+T_NAME		=	main.a
 
-# test:
-# 	$(CC) $(CFLAGS) -g $(T_SRCS) -o $(T_NAME)
+test:
+	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
 # 	clear
 # ifdef v
 # 	./$(T_NAME) $(v)
 # 	norminette ft_$(v).c
 # else
-# 	./$(T_NAME)
+	./$(T_NAME)
 # endif
 
 # val:
