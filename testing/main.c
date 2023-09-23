@@ -12,16 +12,7 @@
 
 #include "../get_next_line.h"
 
-// void	check_newline(char *str);
-// {
-// 	while(*str && *str != '\n')
-// 		str++;
-// 	if (*str == '\n')
-// 		return (1);
-// 	return (0);
-// }
-
-static int	count = 1;
+static int	g_count = 1;
 
 void	print_chars(char *str)
 {
@@ -37,14 +28,12 @@ void	print_chars(char *str)
 
 void	print_line(char *str)
 {
-	// printf("-----------------------------------------\n");
-	printf("[%d] next line is --> \"", count++);
+	printf("[%d] next line is --> \"", g_count++);
 	print_chars(str);
 	if (!check_newline(str))
 		printf("\" (no '\\n')\n");
 	else
 		printf("\"\n");
-	// printf("-----------------------------------------\n");
 }
 
 void	test_gnl(char *test)
@@ -52,7 +41,7 @@ void	test_gnl(char *test)
 	int			fd;
 	char		*ptr;
 
-	count = 1;
+	g_count = 1;
 	printf("/////////////////////////////////////////\n");
 	printf("test file\t= %s\n", test);
 	fd = open(test, O_RDONLY);
@@ -67,7 +56,7 @@ void	test_gnl(char *test)
 	printf("-----------------------------------------\n");
 }
 
-int	main()
+int	main(void)
 {
 	printf("BUFFER_SIZE\t= %d\n", BUFFER_SIZE);
 	test_gnl("giant_line.txt");
@@ -81,7 +70,7 @@ int	main()
 	test_gnl("variable_nls.txt");
 	test_gnl("lines_around_10.txt");
 	test_gnl("read_error.txt");
-	return(0);
+	return (0);
 }
 
 /*
