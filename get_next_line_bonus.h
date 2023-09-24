@@ -31,13 +31,13 @@ typedef struct s_list
 
 //	get_next_line_bonus.c
 char	*get_next_line(int fd);
-char	*read_next_line(int fd, char *store, char *buffer);
+char	*read_next_line(int fd, char **store, char *buffer);
 char	*cut_line(char *line);
 
 //	get_next_line_utils_bonus.c
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
-int		check_newline(char *s);
+size_t	check_newline(const char *s);
 
 #endif

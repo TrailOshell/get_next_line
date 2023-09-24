@@ -24,18 +24,15 @@
 
 //	get_next_line.c
 char	*get_next_line(int fd);
-char	*read_next_line(int fd, char **store, char *buffer);
-char	*get_store(char *store, char *buffer);
-char	*join_line(char const *s1, char const *s2);
-// char	*cut_line(char *line);
+char	*read_next_line(int fd, char *store, char *buffer);
+char	*cut_line(char *line);
 
 //	get_next_line_utils.c
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
-char	*ft_strchr(const char *s, int c);
-// char	*ft_strjoin(char const *s1, char const *s2);
-size_t	check_newline(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+int		check_newline(char *s);
+// char	*ft_substr(char const *s, unsigned int start, size_t len);
 // size_t	ft_find_newline(char *s);
 
 #endif

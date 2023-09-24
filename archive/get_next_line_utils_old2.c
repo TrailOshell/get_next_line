@@ -16,8 +16,6 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
-	if (!s)
-		return (0);
 	i = 0;
 	while (s[i])
 		i++;
@@ -41,100 +39,59 @@ char	*ft_strdup(const char *s1)
 	return (ptr);
 }
 
-char	*ft_strchr(const char *s, int c)
+int	check_newline(char *s)
 {
-	while (*s != (char)c)
+	while (*s)
 	{
-		if (!*s++)
-			return (0);
+		if (*s == '\n')
+			return (1);
+		s++;
 	}
-	return ((char *)s);	
+	return (0);
 }
 
-size_t check_newline(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] == '\n')
-		i++;
-	return (i);
-	// while (*s)
-	// {
-	// 	if (*s == '\n')
-	// 		return (1);
-	// 	s++;
-	// }
-	// return (0);
-}
-
-char	*join_line(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
 	size_t	i;
 
 	if (!s1 || !s2)
 		return (NULL);
-	ptr = malloc((ft_strlen(s1) + check_newline(s2) + 1));
+	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!ptr)
 		return (NULL);
 	i = 0;
-	while (*s1 && *s1 != '\n')
+	while (*s1)
 		ptr[i++] = *s1++;
-	if (*s1 == '\n')
-		ptr[i++] = *s1++;
-	while (*s2 && *s2 != '\n')
-		ptr[i++] = *s2++;
-	if (*s2 == '\n')
+	while (*s2)
 		ptr[i++] = *s2++;
 	ptr[i] = '\0';
 	return (ptr);
 }
 
-// char	*ft_strjoin(char const *s1, char const *s2)
+// char	*ft_substr(char const *s, unsigned int start, size_t len)
 // {
-// 	char	*ptr;
+// 	char	*sub;
 // 	size_t	i;
+// 	char	*src;
 
-// 	if (!s1 || !s2)
-// 		return (NULL);
-// 	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
-// 	if (!ptr)
-// 		return (NULL);
+// 	if (!s)
+// 		return (0);
+// 	if (ft_strlen(s) <= start)
+// 		return (ft_strdup(""));
+// 	sub = malloc(len + 1);
+// 	if (!sub)
+// 		return (0);
+// 	src = (char *)(s + start);
 // 	i = 0;
-// 	while (*s1)
-// 		ptr[i++] = *s1++;
-// 	while (*s2)
-// 		ptr[i++] = *s2++;
-// 	ptr[i] = '\0';
-// 	return (ptr);
+// 	if (len)
+// 	{
+// 		while (i < len - 1 && *src)
+// 			sub[i++] = *src++;
+// 		sub[i] = '\0';
+// 	}
+// 	return (sub);
 // }
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-	size_t	i;
-	char	*src;
-
-	if (!s)
-		return (0);
-	if (ft_strlen(s) <= start)
-		return (ft_strdup(""));
-	sub = malloc(len + 1);
-	if (!sub)
-		return (0);
-	src = (char *)(s + start);
-	i = 0;
-	if (len)
-	{
-		while (i < len - 1 && *src)
-			sub[i++] = *src++;
-		sub[i] = '\0';
-	}
-	return (sub);
-}
 
 // size_t	ft_find_newline(char *s)
 // {
