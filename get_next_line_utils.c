@@ -62,27 +62,3 @@ size_t check_newline(const char *s)
 		i++;
 	return (i);
 }
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-	size_t	i;
-	char	*src;
-
-	if (!s)
-		return (0);
-	if (ft_strlen(s) <= start)
-		return (ft_strdup(""));
-	sub = malloc(len + 1);
-	if (!sub)
-		return (0);
-	src = (char *)(s + start);
-	i = 0;
-	if (len)
-	{
-		while (i < len - 1 && *src)
-			sub[i++] = *src++;
-		sub[i] = '\0';
-	}
-	return (sub);
-}

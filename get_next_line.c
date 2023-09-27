@@ -71,7 +71,10 @@ char	*read_next_line(int fd, char **store, char *buffer)
 		// output_chars("*store", *store);
 		read_data = read(fd, buffer, BUFFER_SIZE);
 		if (read_data == -1)
+		{
+			free(*store);
 			return (NULL);
+		}
 		if (!read_data)
 			break ;
 		buffer[read_data] = '\0';
@@ -101,19 +104,16 @@ char	*read_next_line(int fd, char **store, char *buffer)
 char	*get_store(char *buffer, size_t index)
 {
 	char	*str;
-	size_t	len;
+	// size_t	len;
 
 	// output_chars("buffer", buffer);
 	str = NULL;
 	// printf("index = %zu\n", index);
-	len = 0;
-	if (buffer[index])	
-		len = ft_strlen(buffer + index);
+	// len = ft_strlen(buffer + index);
 	// printf("len = %zu\n", len);
-	if (!len)
-		return (NULL);
-	if (len)
-		str = ft_substr(buffer, index, len + 1);
+	if (buffer[index])
+		str = ft_strdup(buffer + index);
+		// str = ft_substr(buffer, index, len + 1);
 	return (str);
 }
 
