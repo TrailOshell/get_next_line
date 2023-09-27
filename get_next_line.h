@@ -25,8 +25,10 @@
 //	get_next_line.c
 char	*get_next_line(int fd);
 char	*read_next_line(int fd, char **store, char *buffer);
-char	*get_store(char *store, char *buffer);
-char	*join_line(char const *s1, char const *s2);
+char	*join_line(char const *s1, char const *s2, size_t *index);
+char	*get_store(char *buffer, size_t index);
+// char	*join_line(char const *s1, char const *s2);
+// char	*get_store(char *store, char *buffer);
 // char	*cut_line(char *line);
 
 //	get_next_line_utils.c

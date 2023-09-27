@@ -11,8 +11,133 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "testing/myft.h"
 #include <stdio.h>
 
+char	*join_line(char const *s1, char const *s2, size_t *index)
+{
+	char	*ptr;
+	size_t	i;
+
+	// printcolor("join_line()\n", "blue");
+	if (!s1 || !s2)
+		return (NULL);
+	// output_chars("s1", (char *)s1);
+	// output_chars("s2", (char *)s2);
+	// printf("ptr size\t= %zu + %zu + 1\n", ft_strlen(s1), check_newline(s2));	
+	ptr = malloc((ft_strlen(s1) + check_newline(s2) + 1));
+	if (!ptr)
+		return (NULL);
+	*index = 0;
+	i = 0;
+	// printf("*s1\t= %c\n", *s1);
+	// printf("*s2\t= %c\n", *s2);
+	while (*s1 && *s1 != '\n')
+		ptr[i++] = *s1++;
+	if (*s1 == '\n')
+		ptr[i++] = *s1++;
+	while (s2[*index] && s2[*index] != '\n')
+		ptr[i++] = s2[(*index)++];
+	if (s2[*index] == '\n')
+		ptr[i++] = s2[(*index)++];
+	ptr[i] = '\0';
+	// output_chars("ptr", (char *)ptr);
+	// printcolor("join_line() END\n", "blue");
+return (ptr);
+}
+
+char	*read_next_line(int fd, char **store, char *buffer)
+{
+	int		read_data;
+	char	*tmp;
+	char	*line;
+	size_t	index;
+
+	// output_chars("*store", *store);
+	index = 0;
+	read_data = 1;
+	if (*store && ft_strchr(*store, '\n'))
+	{
+		tmp = *store;
+		line = join_line("", tmp, &index);
+		free(tmp);
+		// output_chars("line", line);
+		*store = get_store(*store, index);
+		// output_chars("*store", *store);
+		return (line);
+	}
+	while (read_data)
+	{
+		// output_chars("*store", *store);
+		read_data = read(fd, buffer, BUFFER_SIZE);
+		if (read_data == -1)
+			return (NULL);
+		if (!read_data)
+			break ;
+		buffer[read_data] = '\0';
+		if (!*store)
+			*store = ft_strdup("");
+		tmp = *store;
+		// output_chars("tmp", tmp);
+		// output_chars("buffer", buffer);
+		*store = join_line(tmp, buffer, &index);
+		free(tmp);
+		if (ft_strchr(buffer, '\n'))
+			break ;
+	}
+	line = *store;
+	// output_chars("line", line);
+	// output_chars("buffer", buffer);
+	// printf("read_data\t= %d\n", read_data);
+	if (read_data)
+		*store = get_store(buffer, index);
+	else
+		*store = NULL;
+	// output_chars("*store", *store);
+	return (line);
+}
+
+char	*get_store(char *buffer, size_t index)
+{
+	char	*str;
+	size_t	len;
+
+	// output_chars("buffer", buffer);
+	str = NULL;
+	if (buffer && !*buffer)
+		return (NULL);
+	// printf("index = %zu\n", index);
+	len = 0;
+	if (buffer[index])	
+		len = ft_strlen(buffer + index);
+	// printf("len = %zu\n", len);
+	if (!len)
+		return (NULL);
+	str = malloc(len + 1);
+	if (!str)
+		return (NULL);
+	if (len)
+		str = ft_substr(buffer, index, len + 1);
+	return (str);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*store;
+	char		*line;
+	char		*buffer;
+
+	line = NULL;
+	if (fd < 0)
+		return (NULL);
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	line = read_next_line(fd, &store, buffer);
+	free(buffer);
+	return (line);
+}
+/*
 char	*read_next_line(int fd, char **store, char *buffer)
 {
 	int		read_data;
@@ -50,7 +175,6 @@ char	*read_next_line(int fd, char **store, char *buffer)
 		free(tmp);
 	return (line);
 }
-
 char	*get_store(char *store, char *buffer)
 {
 	char	*str;
@@ -93,6 +217,7 @@ char	*get_store(char *store, char *buffer)
 	str = ft_substr(trim, 0, len);
 	return (str);
 }
+*/
 /*
 char	*get_store(char *store, char *buffer)
 {
@@ -178,29 +303,6 @@ char	*get_store(char *store, char *buffer)
 // }
 
 //	the mandatory function
-char	*get_next_line(int fd)
-{
-	static char	*store;
-	char		*line;
-	char		*buffer;
-
-	line = NULL;
-	if (fd < 0)
-		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	line = read_next_line(fd, &store, buffer);
-	free(buffer);
-	// if (line)
-	// 	store = cut_line(line);
-	// else
-	// {
-	// 	free(store);
-	// 	store = NULL;
-	// }
-	return (line);
-}
 
 /*
 	// if (*line == '\0' || *(line - (len) + 1) == '\0')

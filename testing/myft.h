@@ -20,6 +20,9 @@
 // # define BLACK "black"
 
 //	MY TEST FUNCTIONS
+//	main.c 
+void	print_chars(char *str);
+void	output_chars(char *test, char *str);
 //	coloring.c
 void	ft_color(char *color);
 void	printcolor(char *s, char *color);

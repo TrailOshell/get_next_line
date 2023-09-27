@@ -16,6 +16,16 @@
 
 static int	g_count = 1;
 
+void	output_chars(char *test, char *str)
+{
+	printf("%s\t= \"", test);
+	if (str)
+		print_chars(str);
+	else
+		printf("(null)");
+	printf("\"\n");
+}
+
 void	print_chars(char *str)
 {
 	while (*str)
@@ -32,18 +42,20 @@ void	print_line(char *str)
 {
 	// printf("[%d] next line is --> \"", g_count++);
 	printcolor("[", "blue");
-	ft_color("white");	
+	ft_color("white");
 	printf("%d", g_count++);
 	ft_color("reset");	
 	printcolor("] ", "blue");
+	if (g_count <= 10)
+		printf(" ");
 	printcolor("next line is --> \"", "black");
 	ft_color("white");
 	print_chars(str);
 	ft_color("reset");
-	if (!check_newline(str))
-		printcolor("\" (no '\\n')\n", "black");
-	else
-		printcolor("\"\n", "black");
+	// if (!check_newline(str))
+	// 	printcolor("\" (no '\\n')\n", "black");
+	// else
+	printcolor("\"\n", "black");
 }
 
 void	test_gnl(char *test)
@@ -68,6 +80,37 @@ void	test_gnl(char *test)
 	printcolor("-----------------------------------------\n", "purple");
 }
 
+void	test_gnl_n(char *test, int n)
+{
+	int			fd;
+	char		*ptr;
+
+	g_count = 1;
+	printcolor("/////////////////////////////////////////\n", "blue");
+	ft_color("black");
+	printf("test file\t= %s\n", test);
+	ft_color("reset");
+	fd = open(test, O_RDONLY);
+	ptr = get_next_line(fd);
+	while (n-- && ptr)
+	{
+		print_line(ptr);
+		free(ptr);
+		ptr = get_next_line(fd);
+	}
+	if (!ptr)
+	{
+		printcolor("[", "blue");
+		ft_color("white");	
+		printf("%d", g_count++);
+		ft_color("reset");	
+		printcolor("] ", "blue");
+		printcolor("no more next line\n", "black");
+	}
+	free(ptr);
+	printcolor("-----------------------------------------\n", "purple");
+}
+
 int	main(void)
 {
 	// int		fd;
@@ -76,15 +119,16 @@ int	main(void)
 	printf("BUFFER_SIZE\t= %d\n", BUFFER_SIZE);
 	// test_gnl("giant_line.txt");
 	// test_gnl("giant_line_nl.txt");
-	test_gnl("text");
+	// test_gnl_n("text", 5);
+	// test_gnl("text");
 	// test_gnl("empty.txt");
-	test_gnl("1char.txt");
-	test_gnl("one_line_no_nl.txt");
-	test_gnl("only_nl.txt");
-	test_gnl("multiple_nl.txt");
-	test_gnl("variable_nls.txt");
+	// test_gnl("1char.txt");
+	// test_gnl("one_line_no_nl.txt");
+	// test_gnl("only_nl.txt");
+	// test_gnl("multiple_nl.txt");
+	// test_gnl("variable_nls.txt");
 	// test_gnl("lines_around_10.txt");
-	// test_gnl("read_error.txt");
+	test_gnl("read_error.txt");
 
 	// fd = open("multiple_nl.txt",O_RDONLY);
 	// ptr = get_next_line(fd);

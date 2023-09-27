@@ -70,28 +70,6 @@ size_t check_newline(const char *s)
 	// return (0);
 }
 
-char	*join_line(char const *s1, char const *s2)
-{
-	char	*ptr;
-	size_t	i;
-
-	if (!s1 || !s2)
-		return (NULL);
-	ptr = malloc((ft_strlen(s1) + check_newline(s2) + 1));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (*s1 && *s1 != '\n')
-		ptr[i++] = *s1++;
-	if (*s1 == '\n')
-		ptr[i++] = *s1++;
-	while (*s2 && *s2 != '\n')
-		ptr[i++] = *s2++;
-	if (*s2 == '\n')
-		ptr[i++] = *s2++;
-	ptr[i] = '\0';
-	return (ptr);
-}
 
 // char	*ft_strjoin(char const *s1, char const *s2)
 // {
