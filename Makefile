@@ -34,7 +34,7 @@ endif
 $(NAME): $(OBJS) 
 	$(AR) $@ $(addprefix $(OBJS_PTH), $^)
 
-%.o: %.c $(INC) $(INC_B)
+%.o: %.c $(INC) $(INC_B) $(MYFT_INC)
 	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJS_PTH), $@)
 
 clean:
@@ -102,18 +102,11 @@ testers: gnl
 
 .PHONY += gnl testers
 
-#	clone to send for submission
-# CLONE_PTH	=	$(USER_PTH)projects/libft/
-
-# clone_all:
-# 	cp $(SRCS) -c $(addprefix $(CLONE_PTH), $(SRCS))
-# 	cp $(SRCS_B) -c $(addprefix $(CLONE_PTH), $(B_SRCS))
-# 	cp libft.h -c $(addprefix $(CLONE_PTH), libft.h)
-
 #	my testing rules
 T_PTH		=	testing/
-# MYFT		=	$(addprefix $(T_PTH), coloring.c cosmetic.c result_compare.c \
+MYFT		=	$(addprefix $(T_PTH), coloring.c cosmetic.c result_compare.c \
 			result_output.c result_text.c)
+MYFT_INC	= 	myft.h
 T_HEADER	=	$(SRCS) $(MYFT)
 T_HEADER_B	=	$(SRCS_B) $(MYFT)
 T_SRCS		=	testing/main.c $(T_HEADER)

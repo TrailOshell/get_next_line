@@ -12,6 +12,7 @@
 
 #include "../get_next_line.h"
 #include "../get_next_line_bonus.h"
+#include "../testing/myft.h"
 
 static int	g_count = 1;
 
@@ -29,12 +30,20 @@ void	print_chars(char *str)
 
 void	print_line(char *str)
 {
-	printf("[%d] next line is --> \"", g_count++);
+	// printf("[%d] next line is --> \"", g_count++);
+	printcolor("[", "blue");
+	ft_color("white");	
+	printf("%d", g_count++);
+	ft_color("reset");	
+	printcolor("] ", "blue");
+	printcolor("next line is --> \"", "black");
+	ft_color("white");
 	print_chars(str);
+	ft_color("reset");
 	if (!check_newline(str))
-		printf("\" (no '\\n')\n");
+		printcolor("\" (no '\\n')\n", "black");
 	else
-		printf("\"\n");
+		printcolor("\"\n", "black");
 }
 
 void	test_gnl(char *test)
@@ -43,8 +52,10 @@ void	test_gnl(char *test)
 	char		*ptr;
 
 	g_count = 1;
-	printf("/////////////////////////////////////////\n");
+	printcolor("/////////////////////////////////////////\n", "blue");
+	ft_color("black");
 	printf("test file\t= %s\n", test);
+	ft_color("reset");
 	fd = open(test, O_RDONLY);
 	ptr = get_next_line(fd);
 	while (ptr)
@@ -54,7 +65,7 @@ void	test_gnl(char *test)
 		ptr = get_next_line(fd);
 	}
 	free(ptr);
-	printf("-----------------------------------------\n");
+	printcolor("-----------------------------------------\n", "purple");
 }
 
 int	main(void)
