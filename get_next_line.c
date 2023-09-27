@@ -60,10 +60,10 @@ char	*read_next_line(int fd, char **store, char *buffer)
 	{
 		tmp = *store;
 		line = join_line("", tmp, &index);
-		free(tmp);
 		// output_chars("line", line);
 		*store = get_store(*store, index);
 		// output_chars("*store", *store);
+		free(tmp);
 		return (line);
 	}
 	while (read_data)
@@ -88,6 +88,7 @@ char	*read_next_line(int fd, char **store, char *buffer)
 	line = *store;
 	// output_chars("line", line);
 	// output_chars("buffer", buffer);
+	// printf("index\t= %zu\n", index);
 	// printf("read_data\t= %d\n", read_data);
 	if (read_data)
 		*store = get_store(buffer, index);
@@ -104,8 +105,6 @@ char	*get_store(char *buffer, size_t index)
 
 	// output_chars("buffer", buffer);
 	str = NULL;
-	if (buffer && !*buffer)
-		return (NULL);
 	// printf("index = %zu\n", index);
 	len = 0;
 	if (buffer[index])	
@@ -137,6 +136,7 @@ char	*get_next_line(int fd)
 	free(buffer);
 	return (line);
 }
+
 /*
 char	*read_next_line(int fd, char **store, char *buffer)
 {
@@ -217,157 +217,4 @@ char	*get_store(char *store, char *buffer)
 	str = ft_substr(trim, 0, len);
 	return (str);
 }
-*/
-/*
-char	*get_store(char *store, char *buffer)
-{
-	char	*trim1;
-	char	*trim2;
-	size_t	size1;
-	size_t	size2;
-	char	*str;
-	size_t	i;
-
-	printf("store =\"%s\"\n", store);
-	size1 = 0;	
-	if (trim1)
-		trim1 = ft_strchr(store, '\n') + 1;
-		// size1 = ft_strlen(trim1);
-		// trim1 = ft_strlen(ft_strchr(store, '\n')) - 1;
-	// printf("trim1 =\"%zu\"\n", trim1);
-	printf("buffer =\"%s\"\n", buffer);
-	trim2 = ft_strchr(buffer, '\n') + 1;
-	size2 = 0;	
-	if (trim2)
-		size2 = ft_strlen(trim2);
-		// trim2 = ft_strlen(ft_strchr(buffer, '\n')) - 1;
-	// printf("trim2 =\"%zu\"\n", trim2);
-	str = malloc(size1 + size2 + 1);
-	// str = malloc(ft_strlen(trim1) + ft_strlen(trim2) + 1);
-	if (!str)
-		return (NULL);
-	i = 0;	
-	printf("str =\"%s\"\n", str);
-	if (trim1)
-	{
-		// trim1 += trim1 + 1;
-		while (*trim1)
-			str[i++] = *(trim1++);
-		printf("str1 =\"%s\"\n", str);
-	}
-	if (trim2)
-	{
-		// trim2 += trim2 + 1;
-		while (*trim2)
-			str[i++] = *(trim2++);
-		printf("str2 =\"%s\"\n", str);
-	}
-	// while (*trim1)
-	// 	str[i++] = *(trim1++);
-	// while (*trim2)
-	// 	str[i++] = *(trim2++);
-	str[i] = '\0';
-	printf("str =\"%s\"\n", str);
-	return (str);
-
-	// printf("buffer =\"%s\"\n", buffer);
-	// tmp = *store;
-	// *store = ft_strdup(trim);
-	// free(tmp);
-}
-*/
-
-// char	*cut_line(char *line)
-// {
-// 	char	*store;
-// 	size_t	len;
-
-// 	while (*line != '\n' && *line != '\0')
-// 		line++;
-// 	if (*line == '\n')
-// 		line++;
-// 	if (*line == '\0')
-// 		return (NULL);
-// 	len = ft_strlen(line);
-// 	store = malloc(len + 1);
-// 	if (!store)
-// 		return (NULL);
-// 	while (*line)
-// 		*store++ = *line++;
-// 	*store = '\0';
-// 	store -= len;
-// 	if (*store == '\0')
-// 		free(store);
-// 	*(line - len) = '\0';
-// 	return (store);
-// }
-
-//	the mandatory function
-
-/*
-	// if (*line == '\0' || *(line - (len) + 1) == '\0')
-	// printf("store\t= \"%s\"\n", store);
-	// printf("line\t= \"%s\"\n", line);
-	// printf("store\t= \"%s\"\n", buffer);
-*/
-/*
-char	*read_next_line(int read_data, char *str, int fd)
-{
-	char	*buffer;
-	char	*ptr;
-	int		i;
-	int		len;
-
-	buffer = malloc(BUFFER_SIZE + 1);
-	while (read_data)
-	{
-		read_data = read(fd, buffer, BUFFER_SIZE);
-		if (read_data < 0)
-			return (free_null(str, buffer, 1, &i));
-		if (!read_data)
-			return (free_null(str, buffer, 1, &i));
-		buffer[read_data] = '\0';
-		if (!str)
-			str = ft_strdup("");
-		i = 0;
-		len = ft_find_newline(buffer);
-		ptr = str;
-		str = malloc(ft_strlen(str) + len + 1);
-		if (!ptr)
-			return (NULL);
-		while (*ptr)
-			str[i++] = *ptr++;
-		free(ptr);
-		while (*buffer && *buffer != '\n')
-			str[i++] = *buffer++;
-		if (*buffer == '\n')
-			str[i++] = '\n';
-		str[i] = '\0';
-		free(buffer - len + 1);
-		if (str[i - 1] == '\n')
-			break;
-	}
-	return (str);
-}
-*/
-
-/*
-	char	*free_null(char *str, char *buffer, int check, int *index)
-	{
-		int	i;
-
-		i = 0;
-		if (check)
-		{
-			free(str);
-			free(buffer);
-		}
-		else
-		{
-			while (str[i] != '\n' && str[i] != '\0')
-				i++;
-			*index = i;
-		}
-		return (NULL);
-	}
 */

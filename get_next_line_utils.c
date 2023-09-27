@@ -61,34 +61,7 @@ size_t check_newline(const char *s)
 	if (s[i] == '\n')
 		i++;
 	return (i);
-	// while (*s)
-	// {
-	// 	if (*s == '\n')
-	// 		return (1);
-	// 	s++;
-	// }
-	// return (0);
 }
-
-
-// char	*ft_strjoin(char const *s1, char const *s2)
-// {
-// 	char	*ptr;
-// 	size_t	i;
-
-// 	if (!s1 || !s2)
-// 		return (NULL);
-// 	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
-// 	if (!ptr)
-// 		return (NULL);
-// 	i = 0;
-// 	while (*s1)
-// 		ptr[i++] = *s1++;
-// 	while (*s2)
-// 		ptr[i++] = *s2++;
-// 	ptr[i] = '\0';
-// 	return (ptr);
-// }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -113,58 +86,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	return (sub);
 }
-
-// size_t	ft_find_newline(char *s)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	// while (s[i] != '\0')
-// 	while (s[i] != '\n' && s[i] != '\0')
-// 		i++;
-// 	if (s[i] == '\n')
-// 		i++;
-// 	return (i);
-// }
-
-/*	ft_strjoin
-	// size1 = ft_strlen(s1);
-	// size2 = ft_strlen(s2);
-	// ptr = malloc(sizeof(char) * (size1 + size2 + 1));
-		// ft_strlcpy(ptr, s1, size1 + 1);
-		// while (i < size1 && *s1)
-		// ft_strlcat(ptr, s2, ft_strlen(ptr) + size2 + 1);
-		// while (i < size1 + size2 - 1 && *s2)
-*/
-
-/*
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*ptr;
-	size_t	i;
-	size_t	size1;
-	size_t	size2;
-
-	if (!s1 || !s2)
-		return (NULL);
-	// ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1));
-	size1 = 0;
-	size2 = 0;
-	if (*s1)
-		size1 = ft_strlen(s1);
-	if (*s2)
-		size2 = ft_strlen(s2);
-	ptr = malloc((size1 + size2 + 1));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	// while (*s1)
-	while (i < size1 - 1 && *s1)
-		ptr[i++] = *s1++;
-	// while (*s2)
-	while (i < size2 - 1 && *s2)
-		ptr[i++] = *s2++;
-	ptr[i] = '\0';
-	return (ptr);
-}
-*/

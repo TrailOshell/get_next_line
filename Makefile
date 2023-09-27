@@ -111,14 +111,6 @@ T_HEADER	=	$(SRCS) $(MYFT)
 T_HEADER_B	=	$(SRCS_B) $(MYFT)
 T_SRCS		=	testing/main.c $(T_HEADER)
 T_SRCS_B	=	testing/main.c $(T_HEADER_B)
-# T_SRCS		+=	$(addprefix $(T_PTH)test_, atoi.c bzero.c calloc.c isalnum.c \
-# 			isalpha.c isascii.c isdigit.c isprint.c itoa.c memchr.c memcmp.c \
-# 			memcpy.c memmove.c memset.c putchar_fd.c putendl_fd.c putnbr_fd.c \
-# 			putstr_fd.c split.c strchr.c strdup.c striteri.c strjoin.c \
-# 			strlcat.c strlcpy.c strlen.c strmapi.c strncmp.c strnstr.c \
-# 			strrchr.c strtrim.c substr.c tolower.c toupper.c)
-# T_SRCS		+=	$(addprefix $(T_PTH)test_, lstnew.c lstadd_front.c lstsize.c \
-# 			lstlast.c lstadd_back.c lstdelone.c lstiter.c lstmap.c)
 T_NAME		=	main.a
 
 test:
@@ -135,14 +127,14 @@ test_b:
 	$(CC) $(CFLAGS) $(T_SRCS_B) -o $(T_NAME)
 	./$(T_NAME)
 
-# val:
-# 	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
-# 	clear
+val:
+	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
+	clear
 # ifdef v
-# 	valgrind ./$(T_NAME) $(v)
+#	valgrind ./$(T_NAME) $(v)
 # 	norminette ft_$(v).c
 # else
-# 	valgrind ./$(T_NAME)
+	valgrind ./$(T_NAME)
 # endif
 
-# .PHONY += test val 
+.PHONY += test val 
