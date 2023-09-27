@@ -112,9 +112,6 @@ char	*get_store(char *buffer, size_t index)
 	// printf("len = %zu\n", len);
 	if (!len)
 		return (NULL);
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
 	if (len)
 		str = ft_substr(buffer, index, len + 1);
 	return (str);

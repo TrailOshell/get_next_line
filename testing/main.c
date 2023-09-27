@@ -121,14 +121,14 @@ int	main(void)
 	// test_gnl("giant_line_nl.txt");
 	// test_gnl_n("text", 5);
 	test_gnl("text");
-	// test_gnl("empty.txt");
-	// test_gnl("1char.txt");
-	// test_gnl("one_line_no_nl.txt");
-	// test_gnl("only_nl.txt");
-	// test_gnl("multiple_nl.txt");
-	// test_gnl("variable_nls.txt");
-	// test_gnl("lines_around_10.txt");
-	// test_gnl("read_error.txt");
+	test_gnl("empty.txt");
+	test_gnl("1char.txt");
+	test_gnl("one_line_no_nl.txt");
+	test_gnl("only_nl.txt");
+	test_gnl("multiple_nl.txt");
+	test_gnl("variable_nls.txt");
+	test_gnl("lines_around_10.txt");
+	test_gnl("read_error.txt");
 
 	// fd = open("multiple_nl.txt",O_RDONLY);
 	// ptr = get_next_line(fd);
