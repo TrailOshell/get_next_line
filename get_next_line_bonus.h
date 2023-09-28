@@ -26,7 +26,7 @@
 //	get_next_line.c
 char	*get_next_line(int fd);
 char	*read_next_line(int fd, char **store, char *buffer);
-char	*get_store(int condition, char *section);
+void	get_store(char **store, int condition, char *section);
 char	*join_line(char const *s1, char const *s2, size_t *index);
 
 //	get_next_line_utils.c

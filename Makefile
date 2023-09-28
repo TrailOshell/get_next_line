@@ -110,8 +110,9 @@ MYFT_INC	= 	myft.h
 T_HEADER	=	$(SRCS) $(MYFT)
 T_HEADER_B	=	$(SRCS_B) $(MYFT)
 T_SRCS		=	testing/main.c $(T_HEADER)
-T_SRCS_B	=	testing/main.c $(T_HEADER_B)
+T_SRCS_B	=	testing/main_b.c $(T_HEADER_B)
 T_NAME		=	main.a
+T_NAME_B	=	main_b.a
 
 test:
 	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
@@ -124,8 +125,8 @@ test:
 # endif
 
 test_b:
-	$(CC) $(CFLAGS) $(T_SRCS_B) -o $(T_NAME)
-	./$(T_NAME)
+	$(CC) $(CFLAGS) $(T_SRCS_B) -o $(T_NAME_B)
+	./$(T_NAME_B)
 
 val:
 	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)

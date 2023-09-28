@@ -113,44 +113,28 @@ void	test_gnl_n(char *test, int n)
 
 int	main(void)
 {
-	// int		fd;
-	// char	*ptr;
+	char	*ptr;
+	int		fd1 = open("txt/multiple_nl.txt", O_RDONLY);
+	int		fd2 = open("txt/text.txt", O_RDONLY);
+	int		fd3 = open("txt/variable_nls.txt", O_RDONLY);
 
 	printf("BUFFER_SIZE\t= %d\n", BUFFER_SIZE);
-	// test_gnl("giant_line.txt");
-	// test_gnl("giant_line_nl.txt");
-	test_gnl_n("text", 5);
-	test_gnl("txt/text.txt");
-	test_gnl("txt/empty.txt");
-	test_gnl("txt/1char.txt");
-	test_gnl("txt/one_line_no_nl.txt");
-	test_gnl("txt/only_nl.txt");
-	test_gnl("txt/multiple_nl.txt");
-	test_gnl("txt/variable_nls.txt");
-	// test_gnl("txt/lines_around_10.txt");
-	// test_gnl("txt/read_error.txt");
-
-	// char	*ptr;
-	// int		fd1 = open("txt/multiple_nl.txt", O_RDONLY);
-	// int		fd2 = open("txt/text.txt", O_RDONLY);
-	// int		fd3 = open("txt/variable_nls.txt", O_RDONLY);
-	// ptr = get_next_line(fd1); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd2); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd2); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd1); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd1); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd1); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-	// ptr = get_next_line(fd3); print_line(ptr); free(ptr);
-
+	ptr = get_next_line(fd1); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd2); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd2); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd1); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd1); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd1); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
+	ptr = get_next_line(fd3); print_line(ptr); free(ptr);
 	return (0);
 }
 
