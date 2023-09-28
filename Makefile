@@ -57,8 +57,8 @@ clear:
 NORM	= $(SRCS) $(INC) $(SRCS_B) $(INC_B)
 
 norm: clear
-	norminette $(NORM)
 	norminette --version
+	norminette $(NORM)
 
 log: clear
 	git log --name-status -2
@@ -118,7 +118,7 @@ test:
 	clear
 # ifdef v
 # 	./$(T_NAME) $(v)
-# 	norminette $(v).c
+	norminette $(v).c
 # else
 	./$(T_NAME)
 # endif
@@ -132,7 +132,7 @@ val:
 	clear
 # ifdef v
 #	valgrind ./$(T_NAME) $(v)
-# 	norminette ft_$(v).c
+	norminette ft_$(v).c
 # else
 	valgrind ./$(T_NAME)
 # endif

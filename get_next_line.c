@@ -49,7 +49,6 @@ char	*join_line(char const *s1, char const *s2, size_t *index)
 	// printcolor("join_line() END\n", "blue");
 */
 
-
 char	*read_next_line(int fd, char **store, char *buffer)
 {
 	int		read_data;
@@ -66,19 +65,14 @@ char	*read_next_line(int fd, char **store, char *buffer)
 			*store = ft_strdup(*store + index);
 		else
 			*store = NULL;
-		free(tmp);
-		return (line);
+		return (free(tmp), line);
 	}
 	read_data = 1;
 	while (read_data)
 	{
 		read_data = read(fd, buffer, BUFFER_SIZE);
 		if (read_data == -1)
-		{
-			free(*store);
-			*store = NULL;
-			return (NULL);
-		}
+			return (free(*store), *store = NULL, NULL);
 		if (!read_data)
 			break ;
 		buffer[read_data] = '\0';
