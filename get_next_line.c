@@ -57,16 +57,6 @@ char	*read_next_line(int fd, char **store, char *buffer)
 	size_t	index;
 
 	index = 0;
-	if (*store && ft_strchr(*store, '\n'))
-	{
-		tmp = *store;
-		line = join_line("", tmp, &index);
-		if ((*store)[index])
-			*store = ft_strdup(*store + index);
-		else
-			*store = NULL;
-		return (free(tmp), line);
-	}
 	read_data = 1;
 	while (read_data)
 	{
@@ -111,15 +101,27 @@ char	*get_next_line(int fd)
 {
 	static char	*store;
 	char		*line;
-	char		*buffer;
+	char		*tmp;
+	size_t		index;
 
 	line = NULL;
 	if (fd < 0)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
+	index = 0;
+	if (store && ft_strchr(store, '\n'))
+	{
+		tmp = store;
+		line = join_line("", tmp, &index);
+		if ((store)[index])
+			store = ft_strdup(store + index);
+		else
+			store = NULL;
+		return (free(tmp), line);
+	}
+	tmp = malloc(BUFFER_SIZE + 1);
+	if (!tmp)
 		return (NULL);
-	line = read_next_line(fd, &store, buffer);
-	free(buffer);
+	line = read_next_line(fd, &store, tmp);
+	free(tmp);
 	return (line);
 }
