@@ -12,11 +12,11 @@
 
 NAME	=	get_next_line.a
 INC		=	get_next_line.h
-# INC_B	=	get_next_line_bonus.h
+INC_B	=	get_next_line_bonus.h
 SRCS 	=	get_next_line.c get_next_line_utils.c
-# SRCS_B	=	$(SRCS:.c=_bonus.c)
+SRCS_B	=	$(SRCS:.c=_bonus.c)
 OBJS	=	$(SRCS:.c=.o)
-# OBJS_B	=	$(SRCS_B:.c=.o)
+OBJS_B	=	$(SRCS_B:.c=.o)
 AR		=	ar rc
 CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
@@ -45,10 +45,10 @@ fclean: clean
 
 re: fclean all
 
-# bonus: $(OBJS_B)
-# 	$(AR) $(NAME) $(addprefix $(OBJS_PTH), $^)
+bonus: $(OBJS_B)
+	$(AR) $(NAME) $(addprefix $(OBJS_PTH), $^)
 
-.PHONY = all clean fclean re #bonus
+.PHONY = all clean fclean re bonus
 
 #	my additional rules
 clear:

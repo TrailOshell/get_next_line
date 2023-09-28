@@ -11,78 +11,90 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
-char	*read_next_line(int fd, char *store, char *buffer)
+char	*join_line(char const *s1, char const *s2, size_t *index)
 {
-	int		read_data;
-	char	*tmp;
+	char	*ptr;
+	size_t	i;
 
-	read_data = 1;
-	while (read_data)
+	if (!s1 || !s2)
+		return (NULL);
+	ptr = malloc((ft_strlen(s1) + len_till_nl(s2) + 1));
+	if (!ptr)
+		return (NULL);
+	*index = 0;
+	i = 0;
+	while (*s1 && *s1 != '\n')
+		ptr[i++] = *s1++;
+	if (*s1 == '\n')
+		ptr[i++] = *s1++;
+	while (s2[*index] && s2[*index] != '\n')
+		ptr[i++] = s2[(*index)++];
+	if (s2[*index] == '\n')
+		ptr[i++] = s2[(*index)++];
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*get_store(int condition, char *section)
+{
+	if (condition)
+		return (ft_strdup(section));
+	else
+		return (NULL);
+}
+
+char	*read_next_line(int fd, char **store, char *buffer)
+{
+	int		rd_data;
+	char	*tmp;
+	char	*line;
+	size_t	index;
+
+	index = 0;
+	rd_data = 1;
+	while (rd_data)
 	{
-		read_data = read(fd, buffer, BUFFER_SIZE);
-		if (read_data <= -1)
-			return (NULL);
-		if (!read_data)
+		rd_data = read(fd, buffer, BUFFER_SIZE);
+		if (rd_data == -1)
+			return (free(*store), *store = NULL, NULL);
+		if (!rd_data)
 			break ;
-		buffer[read_data] = '\0';
-		if (!store)
-			store = ft_strdup("");
-		tmp = store;
-		store = ft_strjoin(tmp, buffer);
+		buffer[rd_data] = '\0';
+		if (!*store)
+			*store = ft_strdup("");
+		tmp = *store;
+		*store = join_line(tmp, buffer, &index);
 		free(tmp);
-		if (check_newline(buffer))
+		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	return (store);
+	line = *store;
+	return (*store = get_store(rd_data && buffer[index], buffer + index), line);
 }
 
-char	*cut_line(char *line)
-{
-	char	*store;
-	size_t	len;
-
-	while (*line != '\n' && *line != '\0')
-		line++;
-	if (*line == '\n')
-		line++;
-	if (*line == '\0')
-		return (NULL);
-	len = ft_strlen(line);
-	store = malloc(len + 1);
-	if (!store)
-		return (NULL);
-	while (*line)
-		*store++ = *line++;
-	*store = '\0';
-	store -= len;
-	if (*store == '\0')
-		free(store);
-	*(line - len) = '\0';
-	return (store);
-}
-
-//	the mandatory function
 char	*get_next_line(int fd)
 {
 	static char	*store[OPEN_MAX];
 	char		*line;
-	char		*buffer;
+	char		*tmp;
+	size_t		index;
 
+	line = NULL;
 	if (fd < 0)
 		return (NULL);
-	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (NULL);
-	line = read_next_line(fd, store[fd], buffer);
-	free(buffer);
-	if (line)
-		store[fd] = cut_line(line);
-	else
+	index = 0;
+	if (store[fd] && ft_strchr(store[fd], '\n'))
 	{
-		free(store[fd]);
-		store[fd] = NULL;
+		tmp = store[fd];
+		line = join_line("", tmp, &index);
+		store[fd] = get_store((store[fd])[index], store[fd] + index);
+		return (free(tmp), line);
 	}
+	tmp = malloc(BUFFER_SIZE + 1);
+	if (!tmp)
+		return (NULL);
+	line = read_next_line(fd, &store[fd], tmp);
+	free(tmp);
 	return (line);
 }

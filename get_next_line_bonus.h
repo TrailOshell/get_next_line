@@ -23,21 +23,16 @@
 #  define BUFFER_SIZE 42
 # endif
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}					t_list;
-
-//	get_next_line_bonus.c
+//	get_next_line.c
 char	*get_next_line(int fd);
 char	*read_next_line(int fd, char **store, char *buffer);
-char	*cut_line(char *line);
+char	*get_store(int condition, char *section);
+char	*join_line(char const *s1, char const *s2, size_t *index);
 
-//	get_next_line_utils_bonus.c
+//	get_next_line_utils.c
 size_t	ft_strlen(const char *s);
+size_t	len_till_nl(const char *s);
 char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	check_newline(const char *s);
+char	*ft_strchr(const char *s, int c);
 
 #endif
