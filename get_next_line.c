@@ -37,16 +37,6 @@ char	*join_line(char const *s1, char const *s2, size_t *index)
 	ptr[i] = '\0';
 	return (ptr);
 }
-/* joinline()
-	// printcolor("join_line()\n", "blue");
-	// output_chars("s1", (char *)s1);
-	// output_chars("s2", (char *)s2);
-	// printf("ptr size\t= %zu + %zu + 1\n", ft_strlen(s1), len_till_nl(s2));	
-	// printf("*s1\t= %c\n", *s1);
-	// printf("*s2\t= %c\n", *s2);
-	// output_chars("ptr", (char *)ptr);
-	// printcolor("join_line() END\n", "blue");
-*/
 
 char	*get_store(int condition, char *section)
 {
@@ -84,21 +74,6 @@ char	*read_next_line(int fd, char **store, char *buffer)
 	line = *store;
 	return (*store = get_store(rd_data && buffer[index], buffer + index), line);
 }
-/* read_next_line()
-	// output_chars("*store", *store);
-		// output_chars("line", line);
-			// *store = get_store(*store, index);
-		// output_chars("*store", *store);
-		// output_chars("*store", *store);
-		// output_chars("tmp", tmp);
-		// output_chars("buffer", buffer);
-	// output_chars("line", line);
-	// output_chars("buffer", buffer);
-	// printf("index\t= %zu\n", index);
-	// printf("read_data\t= %d\n", read_data);
-		// *store = get_store(buffer, index);
-	// output_chars("*store", *store);
-*/
 
 char	*get_next_line(int fd)
 {
@@ -125,3 +100,29 @@ char	*get_next_line(int fd)
 	free(tmp);
 	return (line);
 }
+
+/* joinline()
+	// printcolor("join_line()\n", "blue");
+	// output_chars("s1", (char *)s1);
+	// output_chars("s2", (char *)s2);
+	// printf("ptr size\t= %zu + %zu + 1\n", ft_strlen(s1), len_till_nl(s2));	
+	// printf("*s1\t= %c\n", *s1);
+	// printf("*s2\t= %c\n", *s2);
+	// output_chars("ptr", (char *)ptr);
+	// printcolor("join_line() END\n", "blue");
+*/
+/* read_next_line()
+	// output_chars("*store", *store);
+		// output_chars("line", line);
+			// *store = get_store(*store, index);
+		// output_chars("*store", *store);
+		// output_chars("*store", *store);
+		// output_chars("tmp", tmp);
+		// output_chars("buffer", buffer);
+	// output_chars("line", line);
+	// output_chars("buffer", buffer);
+	// printf("index\t= %zu\n", index);
+	// printf("read_data\t= %d\n", read_data);
+		// *store = get_store(buffer, index);
+	// output_chars("*store", *store);
+*/
