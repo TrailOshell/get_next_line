@@ -37,7 +37,6 @@ char	*join_line(char const *s1, char const *s2, size_t *index)
 	ptr[i] = '\0';
 	return (ptr);
 }
-
 /* joinline()
 	// printcolor("join_line()\n", "blue");
 	// output_chars("s1", (char *)s1);
@@ -49,23 +48,31 @@ char	*join_line(char const *s1, char const *s2, size_t *index)
 	// printcolor("join_line() END\n", "blue");
 */
 
+char	*get_store(int condition, char *section)
+{
+	if (condition)
+		return (ft_strdup(section));
+	else
+		return (NULL);
+}
+
 char	*read_next_line(int fd, char **store, char *buffer)
 {
-	int		read_data;
+	int		rd_data;
 	char	*tmp;
 	char	*line;
 	size_t	index;
 
 	index = 0;
-	read_data = 1;
-	while (read_data)
+	rd_data = 1;
+	while (rd_data)
 	{
-		read_data = read(fd, buffer, BUFFER_SIZE);
-		if (read_data == -1)
+		rd_data = read(fd, buffer, BUFFER_SIZE);
+		if (rd_data == -1)
 			return (free(*store), *store = NULL, NULL);
-		if (!read_data)
+		if (!rd_data)
 			break ;
-		buffer[read_data] = '\0';
+		buffer[rd_data] = '\0';
 		if (!*store)
 			*store = ft_strdup("");
 		tmp = *store;
@@ -75,11 +82,7 @@ char	*read_next_line(int fd, char **store, char *buffer)
 			break ;
 	}
 	line = *store;
-	if (read_data && buffer[index])
-		*store = ft_strdup(buffer + index);
-	else
-		*store = NULL;
-	return (line);
+	return (*store = get_store(rd_data && buffer[index], buffer + index), line);
 }
 /* read_next_line()
 	// output_chars("*store", *store);
@@ -112,10 +115,7 @@ char	*get_next_line(int fd)
 	{
 		tmp = store;
 		line = join_line("", tmp, &index);
-		if ((store)[index])
-			store = ft_strdup(store + index);
-		else
-			store = NULL;
+		store = get_store((store)[index], store + index);
 		return (free(tmp), line);
 	}
 	tmp = malloc(BUFFER_SIZE + 1);

@@ -24,6 +24,18 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
+size_t	len_till_nl(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	if (s[i] == '\n')
+		i++;
+	return (i);
+}
+
 char	*ft_strdup(const char *s1)
 {
 	char			*ptr;
@@ -49,16 +61,4 @@ char	*ft_strchr(const char *s, int c)
 			return (0);
 	}
 	return ((char *)s);
-}
-
-size_t	len_till_nl(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] == '\n')
-		i++;
-	return (i);
 }
