@@ -26,7 +26,6 @@
 char	*get_next_line(int fd);
 char	*read_next_line(int fd, char **store, char *buffer);
 char	*join_line(char const *s1, char const *s2, size_t *index);
-char	*get_store(char *buffer, size_t index);
 
 //	get_next_line_utils.c
 size_t	ft_strlen(const char *s);

@@ -61,7 +61,11 @@ char	*read_next_line(int fd, char **store, char *buffer)
 		tmp = *store;
 		line = join_line("", tmp, &index);
 		// output_chars("line", line);
-		*store = get_store(*store, index);
+		if ((*store)[index])
+			*store = ft_strdup(*store + index);
+			// *store = get_store(*store, index);
+		else
+			*store = NULL;
 		// output_chars("*store", *store);
 		free(tmp);
 		return (line);
@@ -93,28 +97,13 @@ char	*read_next_line(int fd, char **store, char *buffer)
 	// output_chars("buffer", buffer);
 	// printf("index\t= %zu\n", index);
 	// printf("read_data\t= %d\n", read_data);
-	if (read_data)
-		*store = get_store(buffer, index);
+	if (read_data && buffer[index])
+		*store = ft_strdup(buffer + index);
+		// *store = get_store(buffer, index);
 	else
 		*store = NULL;
 	// output_chars("*store", *store);
 	return (line);
-}
-
-char	*get_store(char *buffer, size_t index)
-{
-	char	*str;
-	// size_t	len;
-
-	// output_chars("buffer", buffer);
-	str = NULL;
-	// printf("index = %zu\n", index);
-	// len = ft_strlen(buffer + index);
-	// printf("len = %zu\n", len);
-	if (buffer[index])
-		str = ft_strdup(buffer + index);
-		// str = ft_substr(buffer, index, len + 1);
-	return (str);
 }
 
 char	*get_next_line(int fd)
