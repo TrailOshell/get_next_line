@@ -31,6 +31,6 @@ char	*join_line(char const *s1, char const *s2, size_t *index);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
-size_t	check_newline(const char *s);
+size_t	len_till_nl(const char *s);
 
 #endif

@@ -48,10 +48,10 @@ char	*ft_strchr(const char *s, int c)
 		if (!*s++)
 			return (0);
 	}
-	return ((char *)s);	
+	return ((char *)s);
 }
 
-size_t check_newline(const char *s)
+size_t	len_till_nl(const char *s)
 {
 	size_t	i;
 
