@@ -133,9 +133,9 @@ val:
 	clear
 # ifdef v
 #	valgrind ./$(T_NAME) $(v)
-	norminette ft_$(v).c
 # else
 	valgrind ./$(T_NAME)
 # endif
+	norminette $(NORM)
 
 .PHONY += test val 

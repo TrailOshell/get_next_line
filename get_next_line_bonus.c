@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */
+/*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:58 by tsomchan          #+#    #+#             */
 /*   Updated: 2023/09/23 16:01:00 by tsomchan         ###   ########.fr       */
 /*                                                                            */
