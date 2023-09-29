@@ -64,7 +64,7 @@ char	*read_next_line(int fd, char **store, char *buffer)
 		tmp = *store;
 		*store = join_line(tmp, buffer, &index);
 		free(tmp);
-		if (ft_strchr(buffer, '\n'))
+		if (index && buffer[index - 1] == '\n')
 			break ;
 		rd_data = read(fd, buffer, BUFFER_SIZE);
 	}
