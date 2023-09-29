@@ -3,8 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 16:00:58 by tsomchan          #+#    #+#             */
 /*   Updated: 2023/09/23 16:01:00 by tsomchan         ###   ########.fr       */
 /*                                                                            */
@@ -12,8 +11,7 @@
 
 #include "get_next_line_bonus.h"
 
-char	*join_line(char const *s1, char const *s2, size_t *index,
-		size_t *l_size)
+char	*join_line(char const *s1, char const *s2, size_t *l_len, size_t *b_nl)
 {
 	char	*ptr;
 	size_t	i;
@@ -21,22 +19,23 @@ char	*join_line(char const *s1, char const *s2, size_t *index,
 
 	if (!s1 || !s2)
 		return (NULL);
-	if (l_size && *l_size > 0)
-		size1 = *l_size;
-	else
+	size1 = *l_len;
+	if (!size1)
 		size1 = len_till_nl(s1);
-	*l_size = size1 + len_till_nl(s2);
-	ptr = malloc(*l_size + 1);
+	*l_len = size1 + len_till_nl(s2);
+	ptr = malloc(*l_len + 1);
 	if (!ptr)
 		return (NULL);
-	*index = 0;
+	*b_nl = 0;
 	i = 0;
 	while (*s1 && *s1 != '\n')
 		ptr[i++] = *s1++;
-	while (s2[*index] && s2[*index] != '\n')
-		ptr[i++] = s2[(*index)++];
-	if (s2[*index] == '\n')
-		ptr[i++] = s2[(*index)++];
+	if (*s1 == '\n')
+		ptr[i++] = *s1++;
+	while (s2[*b_nl] && s2[*b_nl] != '\n')
+		ptr[i++] = s2[(*b_nl)++];
+	if (s2[*b_nl] == '\n')
+		ptr[i++] = s2[(*b_nl)++];
 	ptr[i] = '\0';
 	return (ptr);
 }
@@ -54,16 +53,14 @@ void	get_store(char **store, int condition, char *section)
 		*store = NULL;
 }
 
-char	*read_next_line(int fd, char **store, char *buffer)
+char	*read_next_line(int fd, char **store, char *buffer, size_t l_len)
 {
 	int		rd_data;
 	char	*tmp;
 	char	*line;
-	size_t	index;
-	size_t	l_size;
+	size_t	b_nl;
 
-	index = 0;
-	l_size = 0;
+	b_nl = 0;
 	rd_data = read(fd, buffer, BUFFER_SIZE);
 	while (rd_data > 0)
 	{
@@ -71,42 +68,41 @@ char	*read_next_line(int fd, char **store, char *buffer)
 		if (!*store)
 			*store = ft_strdup("");
 		tmp = *store;
-		*store = join_line(tmp, buffer, &index, &l_size);
+		*store = join_line(tmp, buffer, &l_len, &b_nl);
 		free(tmp);
-		if (index && buffer[index - 1] == '\n')
+		if (*store && (*store)[l_len - 1] == '\n')
 			break ;
 		rd_data = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (rd_data == -1)
 		return (get_store(store, -1, NULL), NULL);
 	line = *store;
-	return (get_store(store, rd_data && buffer[index], buffer + index), line);
+	return (get_store(store, rd_data && buffer[b_nl], buffer + b_nl), line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*store[OPEN_MAX];
-	char		*line;
 	char		*tmp;
-	size_t		index;
-	size_t		l_size;
+	char		*line;
+	size_t		l_len;
+	size_t		b_nl;
 
-	line = NULL;
 	if (fd < 0)
 		return (NULL);
-	index = len_till_nl(store[fd]);
-	l_size = 0;
-	if (index && store[fd][index - 1] == '\n')
+	b_nl = 0;
+	l_len = len_till_nl(store[fd]);
+	if (store[fd] && store[fd][l_len - 1] == '\n')
 	{
 		tmp = store[fd];
-		line = join_line("", tmp, &index, &l_size);
-		get_store(&(store[fd]), (store[fd])[index], store[fd] + index);
+		line = join_line(tmp, "", &l_len, &b_nl);
+		get_store(&(store[fd]), (store[fd])[l_len], store[fd] + l_len);
 		return (free(tmp), line);
 	}
 	tmp = malloc(BUFFER_SIZE + 1);
 	if (!tmp)
 		return (NULL);
-	line = read_next_line(fd, &store[fd], tmp);
+	line = read_next_line(fd, &store[fd], tmp, l_len);
 	free(tmp);
 	return (line);
 }
