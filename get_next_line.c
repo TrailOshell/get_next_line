@@ -109,6 +109,33 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
+/*	trying to optimize BUFFER_SIZE == 1 speed
+char	*b_to_arr(int fd, char *buffer, char *arr)
+{
+	int		rd_data;
+	int		i;
+
+	i = 0;
+	rd_data = 1;
+	while (rd_data > 0 && i < 10)
+	{
+		(arr)[i++] = *buffer;
+		if (*buffer == '\n')
+			break;
+		rd_data = read(fd, buffer, BUFFER_SIZE);
+	}
+	arr[i] = '\0';	
+	return (arr);
+}
+	// if (BUFFER_SIZE == 1)
+	// 	arr = malloc(10 + 1);
+		// if (BUFFER_SIZE == 1)
+		// 	*store = join_line(tmp, b_to_arr(fd, buffer, arr), &l_len, &b_nl);
+		// else
+		// 	*store = join_line(tmp, buffer, &l_len, &b_nl);
+	// if (BUFFER_SIZE == 1)
+	// 	return (free(arr), get_store(store, 0, NULL), line);
+*/
 /* joinline()
 	// printcolor("join_line()\n", "blue");
 	// output_chars("s1", (char *)s1);

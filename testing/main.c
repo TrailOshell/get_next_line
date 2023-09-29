@@ -77,6 +77,7 @@ void	test_gnl(char *test)
 		ptr = get_next_line(fd);
 	}
 	free(ptr);
+	close(fd);
 	printcolor("-----------------------------------------\n", "purple");
 }
 

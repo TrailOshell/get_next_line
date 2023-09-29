@@ -20,7 +20,8 @@ OBJS_B	=	$(SRCS_B:.c=.o)
 AR		=	ar rc
 CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
-CFLAGS_BUFF	=	-D BUFFER_SIZE=42
+B_SIZE	:=	42
+CFLAGS_BUFF	=	-D BUFFER_SIZE=$(B_SIZE)
 RM		=	rm -f
 
 OBJS_PTH	=	objs/
@@ -28,7 +29,7 @@ OBJS_PTH	=	objs/
 all : $(NAME)
 
 ifdef b
-CFLAGS_BUFF	=	-D BUFFER_SIZE=$(b)
+B_SIZE = $(b)
 endif
 
 $(NAME): $(OBJS) 
@@ -68,6 +69,9 @@ clean_more:
 	rm -f .DS_Store
 	rm -f main.a
 
+# self_destruct: clean_more
+#	rm -f Makefile
+
 .PHONY += clear norm log clean_more
 
 #	git
@@ -87,15 +91,15 @@ git: git_add push
 
 #	testers
 USER_PTH	=	/Users/tsomchan/
-PROJECT_PTH	=	$(USER_PTH)github/libft/
+PROJECT_PTH	=	$(USER_PTH)github/get_next_line/
 TESTER_PTH	=	$(USER_PTH)testers/
-GNL			=	$(TESTER_PTH)gnlTester/
+GNL			=	$(PROJECT_PTH)gnlTester/
 
 gnl:
 ifdef v
-	make $(v) -C $(TRI)
+	make $(v) -C $(GNL)
 else
-	make -C $(TRI)
+	make -C $(GNL)
 endif
 
 testers: gnl
@@ -115,27 +119,19 @@ T_NAME		=	main.a
 T_NAME_B	=	main_b.a
 
 test:
-	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
+	$(CC) $(CFLAGS_BUFF) $(T_SRCS) -o $(T_NAME)
 	clear
-# ifdef v
-# 	./$(T_NAME) $(v)
 	norminette $(v).c
-# else
 	./$(T_NAME)
-# endif
 
 test_b:
-	$(CC) $(CFLAGS) $(T_SRCS_B) -o $(T_NAME_B)
+	$(CC) $(CFLAGS_BUFF) $(T_SRCS_B) -o $(T_NAME_B)
 	./$(T_NAME_B)
 
 val:
-	$(CC) $(CFLAGS) $(T_SRCS) -o $(T_NAME)
+	$(CC) $(CFLAGS_BUFF) $(T_SRCS) -o $(T_NAME)
 	clear
-# ifdef v
-#	valgrind ./$(T_NAME) $(v)
-# else
 	valgrind ./$(T_NAME)
-# endif
-	norminette $(NORM)
+#	norminette $(NORM)
 
-.PHONY += test val 
+.PHONY += test test_b val 
