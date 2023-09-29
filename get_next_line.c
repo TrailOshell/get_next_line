@@ -25,7 +25,7 @@ char	*join_line(char const *s1, char const *s2, size_t *index,
 	if (l_size && *l_size > 0)
 		size1 = *l_size;
 	else
-		size1 = ft_strlen(s1);
+		size1 = len_till_nl(s1);
 	*l_size = size1 + len_till_nl(s2);
 	ptr = malloc(*l_size + 1);
 	if (!ptr)
@@ -95,9 +95,9 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (fd < 0)
 		return (NULL);
-	index = 0;
+	index = len_till_nl(store);
 	l_size = 0;
-	if (store && ft_strchr(store, '\n'))
+	if (index && store[index - 1] == '\n')
 	{
 		tmp = store;
 		line = join_line("", tmp, &index, &l_size);
