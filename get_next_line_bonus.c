@@ -12,14 +12,21 @@
 
 #include "get_next_line_bonus.h"
 
-char	*join_line(char const *s1, char const *s2, size_t *index)
+char	*join_line(char const *s1, char const *s2, size_t *index,
+		size_t *l_size)
 {
 	char	*ptr;
 	size_t	i;
+	size_t	size1;
 
 	if (!s1 || !s2)
 		return (NULL);
-	ptr = malloc((ft_strlen(s1) + len_till_nl(s2) + 1));
+	if (l_size && *l_size > 0)
+		size1 = *l_size;
+	else
+		size1 = ft_strlen(s1);
+	*l_size = size1 + len_till_nl(s2);
+	ptr = malloc(*l_size + 1);
 	if (!ptr)
 		return (NULL);
 	*index = 0;
@@ -53,8 +60,10 @@ char	*read_next_line(int fd, char **store, char *buffer)
 	char	*tmp;
 	char	*line;
 	size_t	index;
+	size_t	l_size;
 
 	index = 0;
+	l_size = 0;
 	rd_data = read(fd, buffer, BUFFER_SIZE);
 	while (rd_data > 0)
 	{
@@ -62,7 +71,7 @@ char	*read_next_line(int fd, char **store, char *buffer)
 		if (!*store)
 			*store = ft_strdup("");
 		tmp = *store;
-		*store = join_line(tmp, buffer, &index);
+		*store = join_line(tmp, buffer, &index, &l_size);
 		free(tmp);
 		if (index && buffer[index - 1] == '\n')
 			break ;
@@ -80,15 +89,17 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*tmp;
 	size_t		index;
+	size_t		l_size;
 
 	line = NULL;
 	if (fd < 0)
 		return (NULL);
 	index = 0;
+	l_size = 0;
 	if (store[fd] && ft_strchr(store[fd], '\n'))
 	{
 		tmp = store[fd];
-		line = join_line("", tmp, &index);
+		line = join_line("", tmp, &index, &l_size);
 		get_store(&(store[fd]), (store[fd])[index], store[fd] + index);
 		return (free(tmp), line);
 	}
