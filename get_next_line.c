@@ -12,7 +12,6 @@
 
 #include "get_next_line.h"
 #include "testing/myft.h"
-#include <stdio.h>
 
 char	*join_line(char const *s1, char const *s2, size_t *index)
 {

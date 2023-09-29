@@ -26,8 +26,6 @@ char	*join_line(char const *s1, char const *s2, size_t *index)
 	i = 0;
 	while (*s1 && *s1 != '\n')
 		ptr[i++] = *s1++;
-	if (*s1 == '\n')
-		ptr[i++] = *s1++;
 	while (s2[*index] && s2[*index] != '\n')
 		ptr[i++] = s2[(*index)++];
 	if (s2[*index] == '\n')
@@ -58,7 +56,7 @@ char	*read_next_line(int fd, char **store, char *buffer)
 
 	index = 0;
 	rd_data = read(fd, buffer, BUFFER_SIZE);
-	while (rd_data)
+	while (rd_data > 0)
 	{
 		buffer[rd_data] = '\0';
 		if (!*store)
