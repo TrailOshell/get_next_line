@@ -11,12 +11,17 @@
 # **************************************************************************** #
 
 NAME	=	get_next_line.a
+
 INC		=	get_next_line.h
 INC_B	=	get_next_line_bonus.h
-SRCS 	=	get_next_line.c get_next_line_utils.c
-SRCS_B	=	$(SRCS:.c=_bonus.c)
-OBJS	=	$(SRCS:.c=.o)
-OBJS_B	=	$(SRCS_B:.c=.o)
+
+SRC 	=	get_next_line.c get_next_line_utils.c
+SRC_B	=	$(SRC:.c=_bonus.c)
+
+OBJ_PTH	=	obj/
+OBJ		=	$(SRC:%.c=$(OBJ_PTH)%.o)
+OBJ_B	=	$(SRC_B:%.c=$(OBJ_PTH)%.o)
+
 AR		=	ar rc
 CC		=	cc -g
 CFLAGS	=	-Wall -Wextra -Werror
@@ -24,30 +29,32 @@ B_SIZE	:=	42
 CFLAGS_BUFF	=	-D BUFFER_SIZE=$(B_SIZE)
 RM		=	rm -f
 
-OBJS_PTH	=	objs/
-
 all : $(NAME)
 
 ifdef b
 B_SIZE = $(b)
 endif
 
-$(NAME): $(OBJS) 
-	$(AR) $@ $(addprefix $(OBJS_PTH), $^)
+$(NAME): $(OBJ) 
+	$(AR) $@ $^
 
-%.o: %.c $(INC) $(INC_B) $(MYFT_INC)
-	$(CC) $(CFLAGS) -c $< -o $(addprefix $(OBJS_PTH), $@)
+$(OBJ_PTH)%.o: %.c $(INC) $(INC_B) | $(OBJ_PTH)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_PTH):
+	mkdir -p $(OBJ_PTH)
+	@echo "$(D_GREEN)compiled $@$(NC)"
 
 clean:
-	$(RM) $(addprefix $(OBJS_PTH), $(OBJS)) #$(OBJS_B)
+	$(RM) $(addprefix $(OBJ_PTH), $(OBJ)) #$(OBJ_B)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-bonus: $(OBJS_B)
-	$(AR) $(NAME) $(addprefix $(OBJS_PTH), $^)
+bonus: $(OBJ_B)
+	$(AR) $(NAME) $(addprefix $(OBJ_PTH), $^)
 
 .PHONY = all clean fclean re bonus
 
@@ -55,7 +62,7 @@ bonus: $(OBJS_B)
 clear:
 	clear
 
-NORM	= $(SRCS) $(INC) $(SRCS_B) $(INC_B)
+NORM	= $(SRC) $(INC) $(SRC_B) $(INC_B)
 
 norm: clear
 	norminette --version
@@ -68,9 +75,6 @@ clean_more:
 	rm -f $(NAME)
 	rm -f .DS_Store
 	rm -f main.a
-
-# self_destruct: clean_more
-#	rm -f Makefile
 
 .PHONY += clear norm log clean_more
 
@@ -89,49 +93,68 @@ git: git_add push
 
 .PHONY += push git_add git
 
+#	Colors
+NC			=	\033[0;0m
+BLACK		=	\033[0;30m
+D_RED		=	\033[0;31m
+D_GREEN		=	\033[0;32m
+D_YELLOW	=	\033[0;33m
+D_BLUE		=	\033[0;34m
+D_PURPLE	=	\033[0;35m
+D_CYAN		=	\033[0;36m
+L_GRAY		=	\033[0;37m
+D_GRAY		=	\033[1;30m
+L_RED		=	\033[1;31m
+L_GREEN		=	\033[1;32m
+L_YELLOW	=	\033[1;33m
+L_BLUE		=	\033[1;34m
+L_PURPLE	=	\033[1;35m
+L_CYAN		=	\033[1;36m
+WHITE		=	\033[1;37m
+
 #	testers
-USER_PTH	=	/Users/tsomchan/
-PROJECT_PTH	=	$(USER_PTH)github/get_next_line/
-TESTER_PTH	=	$(USER_PTH)testers/
-GNL			=	$(PROJECT_PTH)gnlTester/
+#USER_PTH	=	/Users/tsomchan/
+#PROJECT_PTH	=	$(USER_PTH)github/get_next_line/
+#TESTER_PTH	=	$(USER_PTH)testers/
+#GNL			=	$(PROJECT_PTH)gnlTester/
 
-gnl:
-ifdef v
-	make $(v) -C $(GNL)
-else
-	make -C $(GNL)
-endif
+#gnl:
+#ifdef v
+#	make $(v) -C $(GNL)
+#else
+#	make -C $(GNL)
+#endif
 
-testers: gnl
+#testers: gnl
 
-.PHONY += gnl testers
+#.PHONY += gnl testers
 
 #	my testing rules
-T_PTH		=	testing/
-MYFT		=	$(addprefix $(T_PTH), coloring.c cosmetic.c result_compare.c \
-			result_output.c result_text.c)
-MYFT_INC	= 	myft.h
-T_HEADER	=	$(SRCS) $(MYFT)
-T_HEADER_B	=	$(SRCS_B) $(MYFT)
-T_SRCS		=	testing/main.c $(T_HEADER)
-T_SRCS_B	=	testing/main_b.c $(T_HEADER_B)
-T_NAME		=	main.a
-T_NAME_B	=	main_b.a
+#T_PTH		=	testing/
+#MYFT		=	$(addprefix $(T_PTH), coloring.c cosmetic.c result_compare.c \
+#			result_output.c result_text.c)
+#MYFT_INC	= 	myft.h
+#T_HEADER	=	$(SRC) $(MYFT)
+#T_HEADER_B	=	$(SRC_B) $(MYFT)
+#T_SRC		=	testing/main.c $(T_HEADER)
+#T_SRC_B	=	testing/main_b.c $(T_HEADER_B)
+#T_NAME		=	main.a
+#T_NAME_B	=	main_b.a
 
-test:
-	$(CC) $(CFLAGS_BUFF) $(T_SRCS) -o $(T_NAME)
-	clear
-	norminette $(v).c
-	./$(T_NAME)
+#test:
+#	$(CC) $(CFLAGS_BUFF) $(T_SRC) -o $(T_NAME)
+#	clear
+#	norminette $(v).c
+#	./$(T_NAME)
 
-test_b:
-	$(CC) $(CFLAGS_BUFF) $(T_SRCS_B) -o $(T_NAME_B)
-	./$(T_NAME_B)
+#test_b:
+#	$(CC) $(CFLAGS_BUFF) $(T_SRC_B) -o $(T_NAME_B)
+#	./$(T_NAME_B)
 
-val:
-	$(CC) $(CFLAGS_BUFF) $(T_SRCS) -o $(T_NAME)
-	clear
-	valgrind ./$(T_NAME)
-#	norminette $(NORM)
+#val:
+#	$(CC) $(CFLAGS_BUFF) $(T_SRC) -o $(T_NAME)
+#	clear
+#	valgrind ./$(T_NAME)
+##	norminette $(NORM)
 
-.PHONY += test test_b val 
+#.PHONY += test test_b val 

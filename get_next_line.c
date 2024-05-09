@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "testing/myft.h"
+//#include "testing/myft.h"
 
 char	*join_line(char const *s1, char const *s2, size_t *l_len, size_t *b_nl)
 {
