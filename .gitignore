@@ -1,4 +1,4 @@
-get_next_line.*a
+get_next_line*.a
 *.o
 .DS_store
 *.dSYM
