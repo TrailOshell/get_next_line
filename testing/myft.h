@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   myft.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsomchan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tsomchan <tsomchan@student.42bangkok.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 14:47:53 by tsomchan          #+#    #+#             */
-/*   Updated: 2023/09/07 15:09:56 by tsomchan         ###   ########.fr       */
+/*   Updated: 2024/12/03 21:58:15 by tsomchan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <string.h>
 # include <ctype.h>
 # include <limits.h>
-// # define BLACK "black"
 
 //	MY TEST FUNCTIONS
 //	main.c 
